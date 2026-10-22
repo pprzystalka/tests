@@ -5,33 +5,38 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[margin=22mm,headheight=15pt]{geometry}
+\usepackage[margin=22mm,headheight=42pt]{geometry}
 \usepackage{fancyhdr}
 \usepackage[unicode,hidelinks]{hyperref}
 \hypersetup{pdftitle={Wykład 4 — scenariusz wypowiedzi do 71 slajdów},pdfauthor={}}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small Projektowanie systemów diagnostycznych}
-\fancyhead[R]{\small Wykład 4 — notatki}
+\fancyhead[L]{\parbox{\textwidth}{\footnotesize\textbf{\BiezacySlajd}\strut}}
+\fancyhead[R]{}
 \fancyfoot[C]{\thepage}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
 \linespread{1.06}
 \raggedright
-\newcommand{\Slajd}[2]{\section*{Slajd #1. #2}}
+\newcommand{\BiezacySlajd}{Wykład 4 -- notatki prowadzącego}
+\newcommand{\Slajd}[2]{\gdef\BiezacySlajd{Slajd #1: #2}\section*{Slajd #1}\textbf{Tytuł slajdu z wykładu:} #2\par\smallskip}
 \begin{document}
 {\Large\bfseries Co powiedzieć przy kolejnych slajdach\par}
 \smallskip
-Samodzielny scenariusz do oryginalnego Wykładu 4. Tekst poniżej jest propozycją wypowiedzi prowadzącego, gotową do wykorzystania i dostosowania do własnego sposobu mówienia. Numeracja odpowiada 71 slajdom załączonej prezentacji. Nie zmieniono prezentacji ani jej formatki. Dwa komentarze na stronę; pytania są częścią wypowiedzi i miejscem na krótką rozmowę ze studentami.
+Samodzielny scenariusz do oryginalnego Wykładu 4. Tekst poniżej jest propozycją wypowiedzi prowadzącego, gotową do wykorzystania i dostosowania do własnego sposobu mówienia. Numeracja odpowiada 71 slajdom załączonej prezentacji. Nie zmieniono prezentacji ani jej formatki. Jeden slajd na stronę; pełny tytuł oraz temat pomagają rozpoznać slajdy o powtarzających się tytułach; pytania są częścią wypowiedzi i miejscem na krótką rozmowę ze studentami.
 \medskip
 % ===== Slajd 01 =====
-\Slajd{1}{Tytuł i otwarcie}
+\Slajd{1}{Projektowanie systemów diagnostycznych -- Wykład 4: schematy diagnozowania, wybrane metody detekcji uszkodzeń}
+\textbf{Temat komentarza:} Otwarcie wykładu\par\medskip
 Dzisiaj przejdziemy od obserwacji sygnału do decyzji diagnostycznej. Załóżmy, że ciśnienie w zbiorniku wzrosło o 50 milibarów. Czy to jest uszkodzenie? Sama wartość zmiany nie wystarcza do odpowiedzi.
 
 Być może operator zwiększył zadanie, być może zmieniło się obciążenie, a być może pojawiła się nieprawidłowość. Naszym zadaniem będzie rozdzielić te wyjaśnienia. Zaczniemy od prostych relacji między sygnałami, następnie omówimy wskaźniki statystyczne, a na końcu sprawdzimy rzeczywisty detektor. Zwróćmy uwagę nie tylko na to, czy alarm się pojawił, ale też kiedy, na jak długo i na jakiej części danych możemy go uczciwie ocenić.
 
+\clearpage
+
 % ===== Slajd 02 =====
 \Slajd{2}{Zadania systemu diagnostycznego}
+\textbf{Temat komentarza:} Detekcja, izolacja, identyfikacja\par\medskip
 Te trzy pojęcia opisują różne poziomy odpowiedzi. Detekcja mówi: pojawiło się uszkodzenie albo symptom wskazujący na uszkodzenie. Izolacja odpowiada: gdzie jest problem i który z rozważanych mechanizmów najlepiej wyjaśnia objawy. Identyfikacja idzie dalej: określa rozmiar i charakter zmian w czasie. Wyobraźmy sobie dwa czujniki tego samego ciśnienia.
 
 Jeśli ich wskazania się rozchodzą, wykrywamy niezgodność. Nie wiemy jednak jeszcze, który czujnik jest uszkodzony. To właśnie różnica między detekcją a izolacją. Pamiętajmy też, że moment wykrycia nie musi być momentem początku uszkodzenia. Wykrycie zwykle następuje z pewnym opóźnieniem.
@@ -40,12 +45,16 @@ Jeśli ich wskazania się rozchodzą, wykrywamy niezgodność. Nie wiemy jednak 
 
 % ===== Slajd 03 =====
 \Slajd{3}{Zadania systemu diagnostycznego}
+\textbf{Temat komentarza:} Jak czytać schemat zadań\par\medskip
 Przeczytajmy schemat od lewej strony. Na wejściu mamy zmienne procesowe, czyli to, co rzeczywiście mierzymy. Najpierw szukamy symptomów: odchyleń, zmian cech albo naruszeń relacji. Następnie sprawdzamy, jaki układ symptomów odpowiada poszczególnym uszkodzeniom. Dopiero później próbujemy określić ich rozmiar i przebieg.
 
 Ważne jest to, że pojedynczy symptom rzadko daje całą diagnozę. Ten sam wzrost temperatury może mieć kilka przyczyn. System potrzebuje więc zarówno informacji obecnych, jak i informacji o braku innych symptomów. Im bardziej podobne objawy różnych uszkodzeń, tym trudniejsza jest ich izolacja. Dalsza część wykładu dotyczy przede wszystkim pierwszego etapu: jak uzyskać wiarygodny symptom.
 
+\clearpage
+
 % ===== Slajd 04 =====
 \Slajd{4}{Diagnozowanie bezpośrednie}
+\textbf{Temat komentarza:} Diagnozowanie bezpośrednie\par\medskip
 W diagnozowaniu bezpośrednim wychodzimy od dostępnych wejść i wyjść procesu. Nie budujemy tutaj jawnego modelu, który przewidywałby cały przebieg obiektu. Zamiast tego obliczamy cechy, sprawdzamy progi lub wykorzystujemy znane relacje między pomiarami. Wynikiem są sygnały diagnostyczne, które można następnie powiązać z uszkodzeniami.
 
 Brak jawnego modelu nie oznacza jednak braku założeń. Jeżeli przyjmuję dopuszczalny zakres ciśnienia, to już korzystam z wiedzy o procesie. Spójrzmy też na zakłócenia: mogą one zmienić sygnał tak samo jak awaria. Dlatego przekroczenie progu jest najpierw informacją o niezgodności, a dopiero po interpretacji staje się podstawą diagnozy.
@@ -54,12 +63,16 @@ Brak jawnego modelu nie oznacza jednak braku założeń. Jeżeli przyjmuję dopu
 
 % ===== Slajd 05 =====
 \Slajd{5}{Diagnozowanie z zastosowaniem modelu obiektu}
+\textbf{Temat komentarza:} Diagnozowanie oparte na modelu\par\medskip
 Tutaj pojawia się dodatkowy element: model obiektu. Model opisuje, jak proces powinien reagować na wejścia przy prawidłowej pracy. Porównując odpowiedź oczekiwaną z pomiarem, otrzymujemy residuum. W najprostszym przypadku jest to różnica pomiaru i przewidywania. Residuum nie musi jednak wynosić dokładnie zero nawet wtedy, gdy obiekt jest sprawny.
 
 Mamy szum, zakłócenia i niedokładność modelu. Dopiero ocena residuum pozwala zdecydować, czy odchylenie jest istotne diagnostycznie. Na przykład opóźnienie wzrostu ciśnienia po zmianie zadania może być całkowicie prawidłowe. Jeśli model uwzględnia tę dynamikę, nie powinien traktować jej jako uszkodzenia. To zasadnicza korzyść dobrze dobranego odniesienia.
 
+\clearpage
+
 % ===== Slajd 06 =====
 \Slajd{6}{Detekcja uszkodzeń bez wsparcia modelem}
+\textbf{Temat komentarza:} Dwie grupy metod bez jawnego modelu\par\medskip
 Metody bez jawnego modelu możemy teraz uporządkować w dwie grupy. Pierwsza wykorzystuje zgodność między sygnałami: dwa pomiary tego samego zjawiska, sygnał zadany i zwrotny albo relację wynikającą z fizyki. Druga analizuje własności przebiegu: jego średnią, rozrzut, częstotliwości, szybkość zmian i zakres wartości. Ten podział pomaga wybrać punkt startu.
 
 Gdy mam dodatkowy czujnik, mogę wykorzystać redundancję. Gdy mam tylko jeden pomiar, mogę analizować jego historię. W obu przypadkach pozostaje to samo pytanie: co uznajemy za prawidłowe i w jakich warunkach? Bez takiego odniesienia nawet bardzo dokładnie obliczony wskaźnik może prowadzić do błędnego alarmu.
@@ -68,12 +81,16 @@ Gdy mam dodatkowy czujnik, mogę wykorzystać redundancję. Gdy mam tylko jeden 
 
 % ===== Slajd 07 =====
 \Slajd{7}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Skąd biorą się proste symptomy?\par\medskip
 Na tym slajdzie mamy cztery praktyczne źródła informacji diagnostycznej. Redundancja sprzętowa daje dodatkowy pomiar. Sprzężenie zwrotne pozwala sprawdzić, czy polecenie zostało wykonane. Związki statystyczne opisują współzmienność sygnałów. Relacje procesowe wykorzystują wiedzę o technologii i fizyce.
 
 Każde rozwiązanie ma inny koszt i inne ograniczenia. Dodatkowy czujnik wymaga sprzętu, korelacja wymaga odpowiednich danych, a reguła ekspercka wymaga znajomości warunków jej obowiązywania. Nie musimy wybierać wyłącznie jednej drogi. W praktycznym systemie warto łączyć proste testy, jeśli dostarczają różnych informacji o obiekcie. Przyjrzyjmy się najpierw porównaniu kilku torów pomiarowych.
 
+\clearpage
+
 % ===== Slajd 08 =====
 \Slajd{8}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Redundancja sprzętowa\par\medskip
 Jeżeli dwa czujniki mierzą tę samą wielkość, możemy odjąć ich wskazania. Otrzymujemy residuum równe y jeden minus y dwa. Mała różnica jest naturalna, ponieważ czujniki mają skończoną dokładność i mogą nie być idealnie zsynchronizowane. Duża różnica jest symptomem niezgodności.
 
 Zwróćmy jednak uwagę: mając tylko dwa czujniki, nie potrafimy z samej różnicy wskazać uszkodzonego toru. Trzeci czujnik może pomóc dzięki regule większości, ale tylko przy odpowiednich założeniach o niezależności i liczbie awarii. Gdy wszystkie tory mają wspólną przyczynę błędu, ich zgodność nie gwarantuje poprawności. Redundancja zwiększa możliwości diagnostyczne, lecz wymaga zarówno nakładów sprzętowych, jak i przemyślanej architektury.
@@ -82,12 +99,16 @@ Zwróćmy jednak uwagę: mając tylko dwa czujniki, nie potrafimy z samej różn
 
 % ===== Slajd 09 =====
 \Slajd{9}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Sprzężenie zwrotne jako kontrola wykonania\par\medskip
 Teraz porównujemy to, co zleciliśmy, z tym, co rzeczywiście zostało wykonane. Wysłanie polecenia do zaworu nie oznacza jeszcze, że zawór zmienił położenie. Pomiar sygnału na wyjściu sterownika sprawdza inną część toru niż pomiar położenia tłoczyska. Dlatego miejsce pobrania sprzężenia zwrotnego ma zasadnicze znaczenie.
 
 Zastanówmy się: czy brak natychmiastowej reakcji jest awarią? Nie, ponieważ napęd ma określoną dynamikę, ograniczenia i czas odpowiedzi. Reguła diagnostyczna powinna więc mówić nie tylko, jaka odpowiedź ma wystąpić, ale również w jakim czasie i z jaką tolerancją. Inaczej będziemy alarmować przy prawidłowych przejściach.
 
+\clearpage
+
 % ===== Slajd 10 =====
 \Slajd{10}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Korelacja wzajemna\par\medskip
 Korelacja wzajemna opisuje zależność dwóch sygnałów z uwzględnieniem przesunięcia w czasie. Parametr m pozwala sprawdzić, czy zmiana jednej wielkości wiąże się ze zmianą drugiej po określonym opóźnieniu. Jeśli znamy taką zależność w stanie zdatnym, jej zmiana może być symptomem.
 
 Nie musi jednak oznaczać uszkodzenia: podobny efekt może dać zmiana obciążenia albo opóźnienia procesu. Ważne doprecyzowanie: zapisany wzór opisuje średni iloczyn sygnałów, a nie automatycznie znormalizowany współczynnik Pearsona. Przed porównaniem wyników musimy ustalić centrowanie, normalizację i długość obserwacji. Założenia stacjonarności oraz ergodyczności mówią nam, kiedy taka charakterystyka ma stabilną interpretację.
@@ -96,12 +117,16 @@ Nie musi jednak oznaczać uszkodzenia: podobny efekt może dać zmiana obciąże
 
 % ===== Slajd 11 =====
 \Slajd{11}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Przykład korelacji wzajemnej\par\medskip
 Na tej ilustracji przejdźmy kolejno przez trzy poziomy: pomiary, parametr diagnostyczny i decyzję. Najpierw patrzymy na dwa przebiegi i ich wzajemne powiązanie. Następnie obserwujemy, jak zmienia się miara tej zależności w obszarze oznaczonym jako uszkodzony. Dopiero na końcu sprawdzamy przekroczenie progu.
 
 Dzięki temu wiemy, z czego wynika alarm. Zadajmy sobie pytanie: co się stanie, jeśli jeden sygnał zostanie tylko opóźniony? Korelacja przy ustalonym przesunięciu może się zmniejszyć, choć kształty pozostaną podobne. Dlatego wybór opóźnienia jest częścią projektu detektora. Ten rysunek pokazuje zasadę działania, nie wyniki końcowej oceny na stanowisku FESTO.
 
+\clearpage
+
 % ===== Slajd 12 =====
 \Slajd{12}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Autokorelacja pojedynczego sygnału\par\medskip
 W poprzednim przykładzie porównywaliśmy dwa różne sygnały. Tutaj porównujemy sygnał z jego własną historią. To pozwala opisać, jak długo utrzymuje się zależność między kolejnymi obserwacjami. Dwa przebiegi mogą mieć podobną średnią i wariancję, a jednak zupełnie inną strukturę czasową. Jeden może zmieniać się płynnie, drugi gwałtownie oscylować.
 
 Autokorelacja pomaga uchwycić tę różnicę. Nadal potrzebujemy jednak odpowiednich warunków odniesienia. Prawidłowa zmiana fazy cyklu również może zmienić charakterystykę. Nie wystarczy więc powiedzieć: autokorelacja się zmieniła. Trzeba jeszcze ustalić, czy taka zmiana była spodziewana przy aktualnym sposobie pracy obiektu.
@@ -110,12 +135,16 @@ Autokorelacja pomaga uchwycić tę różnicę. Nadal potrzebujemy jednak odpowie
 
 % ===== Slajd 13 =====
 \Slajd{13}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Relacje jakościowe i procesowe\par\medskip
 Nie zawsze znamy dokładny model matematyczny procesu, ale często znamy relacje, które powinny być spełnione. Możemy wiedzieć, że pewne zdarzenie musi poprzedzać inne, że przy określonym przepływie powinien pojawić się spadek ciśnienia albo że zmienne powinny zmieniać się w zgodnym kierunku. Taką wiedzę można przekształcić w regułę diagnostyczną.
 
 Kluczowe są jednak przesłanki. Na przykład stwierdzenie, że przy zamkniętym dopływie ciśnienie nie może rosnąć, wymaga dodatkowych założeń o temperaturze i pozostałych połączeniach. Reguła ma więc postać: jeśli obowiązują określone warunki, to oczekujemy określonej relacji. Naruszenie tej relacji daje symptom, nie od razu pełną diagnozę.
 
+\clearpage
+
 % ===== Slajd 14 =====
 \Slajd{14}{Detekcja uszkodzeń na podstawie kontroli prostych związków między sygnałami}
+\textbf{Temat komentarza:} Od relacji do reguły diagnostycznej\par\medskip
 Ten przykład pokazuje, jak przejść od wiedzy o procesie do warunku logicznego. Najpierw rozpoznajemy wielkości mierzone. Potem wskazujemy, w jakim stanie procesu sprawdzamy relację. Następnie oceniamy, czy relacja została naruszona, i dopiero wtedy ustawiamy sygnał diagnostyczny.
 
 Zwróćmy uwagę na obszar oznaczony jako stan uszkodzony i porównajmy go z chwilą zmiany decyzji. Dobra reguła musi uwzględniać tolerancję pomiaru oraz normalną dynamikę. Gdybyśmy sprawdzali idealną zależność bez żadnego marginesu, szum mógłby powodować ciągłe alarmy. Celem tego przykładu jest sposób budowania testu; konkretnej relacji nie należy bez sprawdzenia przenosić na inne obiekty.
@@ -124,12 +153,16 @@ Zwróćmy uwagę na obszar oznaczony jako stan uszkodzony i porównajmy go z chw
 
 % ===== Slajd 15 =====
 \Slajd{15}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Mapa metod analizy sygnałów\par\medskip
 Teraz przechodzimy od zgodności kilku zmiennych do analizy własności sygnału. Możemy sprawdzić jego poziom i rozrzut, strukturę częstotliwościową, fizyczną wiarygodność, szybkość zmian albo zgodność z granicami technologicznymi. Te metody odpowiadają na różne pytania.
 
 Test zakresu nie wykryje każdej zmiany regularności, a złożona miara regularności nie zastąpi kontroli niemożliwej wartości pomiaru. Dlatego warto zaczynać od prostych i dobrze uzasadnionych testów. Przy każdej metodzie będziemy pytać: co właściwie mierzy wskaźnik, jaki jest jego stan odniesienia i jaka reguła zmienia wynik liczbowy w alarm? To będzie nasz wspólny schemat analizy.
 
+\clearpage
+
 % ===== Slajd 16 =====
 \Slajd{16}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Średnia i wariancja w oknie\par\medskip
 Średnia opisuje przeciętny poziom sygnału w oknie, a wariancja opisuje rozrzut wokół tego poziomu. Jeśli do każdej próbki dodam tę samą stałą, średnia się zmieni, natomiast wariancja pozostanie taka sama. Dzięki temu obie wielkości niosą różne informacje diagnostyczne.
 
 Mianownik n minus jeden odpowiada podanej estymacie wariancji próbki. Pamiętajmy jednak, że próbki procesowe zwykle są skorelowane, więc nie mamy automatycznie n niezależnych obserwacji. Co więcej, okno obejmujące prawidłowy skok zadania może mieć dużą wariancję. Wynik musimy więc porównywać z odpowiednim stanem pracy, a nie z jedną uniwersalną liczbą dla całego procesu.
@@ -138,12 +171,16 @@ Mianownik n minus jeden odpowiada podanej estymacie wariancji próbki. Pamiętaj
 
 % ===== Slajd 17 =====
 \Slajd{17}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Przykład zmiany parametrów statystycznych\par\medskip
 Tutaj widać, dlaczego warto obliczać cechy zamiast oglądać tylko surowy sygnał. Zmiana fluktuacji może być niewielka w samym przebiegu, ale wyraźna w wariancji. Przeczytajmy rysunek od góry: najpierw pomiar, potem parametr, na końcu alarm. Zauważmy, że wskaźnik nie musi reagować natychmiast.
 
 Okno stopniowo zapełnia się próbkami po zmianie, a dodatkowo trzeba przekroczyć ustalony próg. Nie wyciągajmy jednak wniosku, że każda awaria zwiększa wariancję. Zablokowany czujnik może właśnie zmniejszyć zmienność. Dlatego kierunek testu i zakres dopuszczalnych wartości wynikają z rozważanego mechanizmu uszkodzenia oraz zachowania sprawnego obiektu.
 
+\clearpage
+
 % ===== Slajd 18 =====
 \Slajd{18}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Analiza spektralna\par\medskip
 Analiza spektralna odpowiada na pytanie, jak energia sygnału rozkłada się między częstotliwościami. W diagnostyce drganiowej uszkodzenie może ujawnić nową składową, zwiększyć amplitudę określonego pasma albo zmienić strukturę widma. Autokorelacja i gęstość widmowa mocy są powiązanymi opisami sygnału przy odpowiednich założeniach stacjonarności.
 
 Warunki pracy nadal mają znaczenie. Jeśli zmieni się prędkość obrotowa, charakterystyczne częstotliwości mogą się przesunąć bez żadnej awarii. Do porównania potrzebujemy więc zgodnego próbkowania, długości rekordu i sposobu obróbki. Sama zmiana widma jest informacją o zmianie zachowania; jej interpretacja diagnostyczna wymaga odniesienia do obiektu.
@@ -152,12 +189,16 @@ Warunki pracy nadal mają znaczenie. Jeśli zmieni się prędkość obrotowa, ch
 
 % ===== Slajd 19 =====
 \Slajd{19}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Granice fizycznej wiarygodności\par\medskip
 Tutaj pytamy przede wszystkim o wiarygodność pomiaru. Czy sprawny tor pomiarowy może wygenerować taką wartość? Granice wynikają z zakresu przetwornika, jego dokładności i przyjętych warunków. To nie jest jeszcze pytanie, czy proces pracuje bezpiecznie.
 
 Wiarygodny czujnik może przecież poprawnie zmierzyć niebezpiecznie wysoką temperaturę. Z drugiej strony uszkodzony czujnik może podawać wartość mieszczącą się w dozwolonym zakresie. Kontrola zakresu jest więc potrzebna, ale nie wystarcza do pełnej oceny. W kolejnych testach dodamy informację o tym, jak sygnał zmienia się w czasie. Dzięki temu wykryjemy także część błędów niewidocznych w samej wartości chwilowej.
 
+\clearpage
+
 % ===== Slajd 20 =====
 \Slajd{20}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Tempo zmian i zablokowanie pomiaru\par\medskip
 Pierwszy test ogranicza zmianę między kolejnymi próbkami. Jeśli obiekt nie może fizycznie zmienić ciśnienia tak szybko, duży skok jest podejrzany. Próg trzeba powiązać z częstotliwością próbkowania: ten sam przyrost ma inne znaczenie w milisekundzie, a inne w minucie. Drugi test szuka braku zmienności przez wiele kolejnych kroków.
 
 Ważne: jedna mała różnica nie wystarcza. Musimy sprawdzać utrzymywanie się warunku w oknie. Czy stałe ciśnienie oznacza zablokowanie czujnika? Niekoniecznie — na plateau regulator właśnie powinien je stabilizować. Test braku zmienności jest uzasadniony wtedy, gdy w danych warunkach oczekujemy mierzalnej odpowiedzi albo naturalnych fluktuacji.
@@ -166,12 +207,16 @@ Ważne: jedna mała różnica nie wystarcza. Musimy sprawdzać utrzymywanie się
 
 % ===== Slajd 21 =====
 \Slajd{21}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Dwa różne naruszenia wiarygodności\par\medskip
 Po lewej stronie mamy przykład zbyt szybkiej zmiany, a po prawej brak zmienności. To dwa różne symptomy, choć oba odnoszą się do wiarygodności jednego sygnału. Sprawdźmy najpierw, jaki fragment pomiaru uruchamia każdy test, a dopiero potem odczytajmy sygnał binarny. Taka kolejność pomaga zrozumieć przyczynę alarmu.
 
 Zauważmy też, że symptom nie wskazuje jednoznacznie źródła problemu. Skok może pochodzić z czujnika, transmisji albo rzeczywistego zdarzenia procesowego. Dla izolacji będziemy potrzebować dodatkowych pomiarów lub reguł. Zaletą osobnych testów jest to, że zachowują informację o charakterze niezgodności, zamiast sprowadzać wszystko do jednego ogólnego ostrzeżenia.
 
+\clearpage
+
 % ===== Slajd 22 =====
 \Slajd{22}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Granice alarmowe i histereza\par\medskip
 Granice alarmowe są zwykle węższe niż granice fizycznej wiarygodności pomiaru. Tutaj interesuje nas dopuszczalny obszar pracy technologicznej. Gdy sygnał oscyluje blisko granicy, prosty próg może powodować szybkie włączanie i wyłączanie alarmu. Histereza rozdziela poziom włączenia i skasowania.
 
 Dzięki temu drobny szum nie zmienia stale decyzji. To coś innego niż potwierdzenie kilkoma kolejnymi próbkami: histereza działa na wartości, potwierdzenie na czas utrzymywania się warunku. Wskazany długi czas detekcji może wystąpić wtedy, gdy uszkodzenie rozwija się wcześniej, ale granica zostaje przekroczona dopiero później. Nie jest to jednak uniwersalna wada każdego testu progowego.
@@ -180,12 +225,16 @@ Dzięki temu drobny szum nie zmienia stale decyzji. To coś innego niż potwierd
 
 % ===== Slajd 23 =====
 \Slajd{23}{Detekcja uszkodzeń z zastosowaniem analizy sygnałów i kontroli ograniczeń}
+\textbf{Temat komentarza:} Jak odczytać histerezę?\par\medskip
 Prześledźmy przebieg i nie patrzmy wyłącznie na jego bieżącą wartość. Alarm górny włącza się po przekroczeniu odpowiedniej granicy, ale wyłącza dopiero po powrocie przez drugi próg. Analogicznie działa alarm dolny. W obszarze histerezy decyzja zależy od poprzedniego stanu.
 
 To oznacza, że alarm jest wynikiem prostej logiki z pamięcią, a nie tylko funkcją jednej próbki. Zastanówmy się, co stanie się przy niewielkich oscylacjach w strefie martwej. Stan powinien pozostać niezmieniony. W ten sposób ograniczamy migotanie, ale musimy świadomie dobrać szerokość strefy, ponieważ wpływa ona również na moment kasowania alarmu.
 
+\clearpage
+
 % ===== Slajd 24 =====
 \Slajd{24}{Ocena detekcji: metryki czasowe DAMADICS}
+\textbf{Temat komentarza:} Metryki czasowe DAMADICS\par\medskip
 Zanim policzymy skuteczność, musimy ustalić horyzont oceny. Mamy początek po rozruchu, moment wystąpienia uszkodzenia i koniec rozpatrywanego okresu. Pierwszy iloraz mówi, przez jaką część czasu zdatności alarm był niepotrzebnie aktywny. Drugi mówi, przez jaką część czasu uszkodzenia alarm był aktywny prawidłowo. Mierzymy więc czas, a nie liczbę impulsów.
 
 Osobno wyznaczamy opóźnienie. W definicji użytej na tym slajdzie odwołujemy się do ostatniego zbocza narastającego decyzji. To nie zawsze jest pierwsza reakcja detektora. Jeśli wykrycia nie ma, zapisujemy brak detekcji, a nie zero sekund. Wszystkie metody musimy oceniać na tych samych przedziałach.
@@ -194,12 +243,16 @@ Osobno wyznaczamy opóźnienie. W definicji użytej na tym slajdzie odwołujemy 
 
 % ===== Slajd 25 =====
 \Slajd{25}{DAMADICS na wykresie: czas z alarmem}
+\textbf{Temat komentarza:} Liczymy czas, nie impulsy\par\medskip
 Policzmy ten przykład wspólnie. Rozruch do dwudziestej sekundy pomijamy. Od dwudziestej do osiemdziesiątej sekundy obiekt jest zdatny, więc mianownik dla fałszywych alarmów wynosi sześćdziesiąt sekund. Alarm zajmuje dziesięć sekund, stąd 16,67\%. Po uszkodzeniu mamy osiemdziesiąt sekund oceny.
 
 Dwa fragmenty poprawnego alarmu zajmują łącznie sześćdziesiąt sekund, czyli 75\%. Nie liczymy tutaj dwóch impulsów jako dwóch poprawnych wykryć. Sumujemy ich długości. Jeden długi fałszywy alarm może więc dać większy udział czasu niż kilka krótkich. To przykład dydaktyczny ilustrujący definicje, a nie wynik pomiarów na stanowisku FESTO.
 
+\clearpage
+
 % ===== Slajd 26 =====
 \Slajd{26}{DAMADICS na wykresie: kiedy wykryto zmianę?}
+\textbf{Temat komentarza:} Pierwsza reakcja a ostatnie zbocze\par\medskip
 Uszkodzenie zaczyna się w osiemdziesiątej sekundzie. Pierwszy impuls alarmowy pojawia się dziesięć sekund później, ale zanika. Kolejne zbocze jest w sto dziesiątej sekundzie i jest ostatnim zboczem narastającym w tym przebiegu. Według przyjętej tu definicji opóźnienie wynosi więc trzydzieści sekund, a nie dziesięć.
 
 Obie liczby opisują inne własności. Dziesięć sekund to pierwsza reakcja, trzydzieści — wynik wskazanej definicji benchmarkowej. Samo ostatnie zbocze nie gwarantuje też, że alarm później się utrzyma. Dlatego obok opóźnienia musimy pokazać przebieg i udział czasu poprawnego alarmu. Jedna liczba nie opisuje całej jakości detekcji.
@@ -208,12 +261,16 @@ Obie liczby opisują inne własności. Dziesięć sekund to pierwsza reakcja, tr
 
 % ===== Slajd 27 =====
 \Slajd{27}{Ocena detekcji: macierz pomyłek}
+\textbf{Temat komentarza:} Macierz pomyłek bez pomylenia osi\par\medskip
 Ustalmy osie, zanim zaczniemy odczytywać macierz. Wiersze opisują rzeczywisty stan, a kolumny decyzję detektora. TN oznacza stan zdatny i brak alarmu. FP oznacza stan zdatny, ale alarm. FN to uszkodzenie bez alarmu, a TP to uszkodzenie z alarmem.
 
 Litera P oznacza decyzję dodatnią, czyli alarm; nie oznacza, że decyzja jest poprawna. O poprawności mówią T oraz F. Każdą ocenioną próbkę przypisujemy dokładnie do jednego pola. Zliczając próbki, tracimy jednak ich kolejność. Macierz nie powie nam, czy przeoczenia były na początku zdarzenia, czy pojawiały się wielokrotnie później. Do tego potrzebny jest przebieg w czasie.
 
+\clearpage
+
 % ===== Slajd 28 =====
 \Slajd{28}{Metryki z macierzy: co oznaczają?}
+\textbf{Temat komentarza:} Każda miara ma inny mianownik\par\medskip
 Najważniejszy jest tutaj mianownik. Czułość wybiera wszystkie próbki niezdatne i pyta, ile z nich wykryliśmy. FPR wybiera próbki zdatne i pyta, ile wywołało fałszywy alarm. Precision zaczyna od zgłoszonych alarmów i pyta, ile było poprawnych.
 
 Accuracy obejmuje wszystkie ocenione decyzje. Wyobraźmy sobie zbiór, w którym 99\% próbek jest zdatnych. Detektor, który nigdy nie alarmuje, uzyska 99\% accuracy, mimo że przeoczy każde uszkodzenie. Przy stałym kroku i tej samej masce czułość oraz FPR odpowiadają wskazanym miarom czasowym. Jeśli mianownik wynosi zero, miara jest niezdefiniowana; nie zamieniamy tego automatycznie na wynik zerowy.
@@ -222,12 +279,16 @@ Accuracy obejmuje wszystkie ocenione decyzje. Wyobraźmy sobie zbiór, w którym
 
 % ===== Slajd 29 =====
 \Slajd{29}{Festo PCS: dwa rzeczywiste cykle F2}
+\textbf{Temat komentarza:} Rzeczywisty sygnał FESTO\par\medskip
 Przechodzimy teraz do rzeczywistych danych. Na górze widzimy ciśnienie i pole nastawy, a na dole etykietę Fault. Czas został liczony względem początku wybranego fragmentu. W 278 sekundzie rozpoczyna się cykl oznaczony jako F2. Zauważmy, że poziom ciśnienia zmienia się również wcześniej.
 
 Nie możemy więc utożsamiać każdej zmiany sygnału z uszkodzeniem. Jeszcze jedna uwaga: sama nazwa pola nastawy nie dowodzi, że ten sygnał był w danej chwili aktywnym wejściem regulatora. Określenie cyberatak pochodzi z opisu eksperymentu. Sam wykres nie pozwala odtworzyć mechanizmu ataku. Te dwa cykle służą demonstracji, a nie końcowej ocenie HOLDOUT.
 
+\clearpage
+
 % ===== Slajd 30 =====
 \Slajd{30}{Okno przesuwne na rzeczywistym ciśnieniu}
+\textbf{Temat komentarza:} Okno przyczynowe\par\medskip
 Wskaźnik obliczamy w oknie kończącym się na ostatniej dostępnej próbce. Przy sześćdziesięciu próbkach używamy próbki bieżącej i pięćdziesięciu dziewięciu wcześniejszych. Nie sięgamy do przyszłości. Przesuwając okno o jedną próbkę, otrzymujemy kolejne wartości statystyki, ale sąsiednie okna współdzielą większość danych.
 
 To ważne dla interpretacji zależności wyników. Zwróćmy też uwagę na okno przecinające początek F2: zawiera próbki z obu stanów. Dlatego reakcja może narastać stopniowo. Sześćdziesiąt próbek przy jednym hercu oznacza pięćdziesiąt dziewięć sekund między skrajnymi znacznikami. Nie wynika z tego jednak, że opóźnienie każdego detektora musi być dokładnie równe długości okna.
@@ -236,12 +297,16 @@ To ważne dla interpretacji zależności wyników. Zwróćmy też uwagę na okno
 
 % ===== Slajd 31 =====
 \Slajd{31}{F2: dane odniesienia, kalibracja i demonstracja}
+\textbf{Temat komentarza:} Rozdział ról danych\par\medskip
 Rozdzielmy role danych. Cykl pierwszy jest odniesieniem: wyznacza między innymi średnią, odchylenie i tolerancję ApEn. Cykl piąty służy do kalibracji progów. Cykle trzeci i czwarty pokazują zachowanie metod.
 
 Nie dopasowujemy progu do widocznego fragmentu z F2. To analiza offline: cykl kalibracyjny został zarejestrowany później niż fragment demonstracyjny, więc nie odtwarzamy tutaj historycznego wdrożenia online. Dla cech zastosowano progi dwustronne, a dla części statystyk jednostronne. Sam empiryczny kwantyl nie gwarantuje określonej liczby fałszywych alarmów na nowych danych. Jeśli zmienią się warunki pracy, może zmienić się również rozkład wskaźnika.
 
+\clearpage
+
 % ===== Slajd 32 =====
 \Slajd{32}{F2: sposób stosowania testów w oknie}
+\textbf{Temat komentarza:} Co naprawdę implementuje demonstracja?\par\medskip
 Zanim obejrzymy wyniki, doprecyzujmy implementacje. CUSUM i Page-Hinkley są tutaj liczone lokalnie: w każdym oknie zaczynają od zera. To nie jest nieprzerwana historia testu sekwencyjnego. GLR szuka możliwego początku zmiany wewnątrz okna, z minimalną długością odcinka i ograniczeniem wariancji.
 
 Lepage i Bartlett porównują sześćdziesiąt bieżących próbek z całym cyklem referencyjnym. Próbki ciśnienia są zależne w czasie, a przebieg zmienia się wraz z fazą. Dlatego wykorzystujemy progi empiryczne i nie interpretujemy nominalnych wartości p tak, jak dla niezależnych prób ze stacjonarnego rozkładu. Kalibracja pomaga, ale nie naprawia automatycznie źle dobranego odniesienia.
@@ -250,12 +315,16 @@ Lepage i Bartlett porównują sześćdziesiąt bieżących próbek z całym cykl
 
 % ===== Slajd 33 =====
 \Slajd{33}{Entropia Shannona: rozkład amplitud}
+\textbf{Temat komentarza:} Entropia Shannona\par\medskip
 Entropia Shannona w tej wersji opisuje histogram amplitud. Dzielimy zakres na koszyki i sprawdzamy ich obsadzenie. Jeśli wszystkie próbki są w jednym koszyku, niepewność jest zerowa i entropia wynosi zero. Dwa jednakowo częste poziomy dają jeden bit.
 
 Ważne jest jednak to, czego ta miara nie widzi: kolejności próbek. Regularna sekwencja naprzemienna i losowo przemieszane próbki mogą mieć dokładnie ten sam histogram. Nie jest to więc ogólna miara dynamiki procesu. Przy porównaniu zachowujemy te same koszyki i długość okna. Zarówno wzrost, jak i spadek względem normalnego zakresu może być diagnostycznie interesujący.
 
+\clearpage
+
 % ===== Slajd 34 =====
 \Slajd{34}{Shannon: rozkład ciśnienia w oknie}
+\textbf{Temat komentarza:} Shannon na danych ciśnienia\par\medskip
 Spójrzmy najpierw na ciśnienie w wyróżnionym niebieskim oknie, potem na entropię i dopiero na decyzję. Zastosowano stałe przedziały amplitudy, więc zmiana wyniku oznacza zmianę rozkładu próbek przy tej samej procedurze. Prawidłowe przejście między poziomami może zwiększyć liczbę zajętych koszyków i zmienić entropię bez uszkodzenia.
 
 Właśnie dlatego nie wystarczy stwierdzić, że wskaźnik wzrósł. Trzeba zapytać, czy wzrost wynika z normalnej fazy pracy. Pomarańczowe tło oznacza etykietę F2, a dolny przebieg pokazuje chwilowe przekroczenie progu. Nie ma tu jeszcze potwierdzania ani pamięci alarmu, które pojawią się w dalszej ocenie.
@@ -264,12 +333,16 @@ Właśnie dlatego nie wystarczy stwierdzić, że wskaźnik wzrósł. Trzeba zapy
 
 % ===== Slajd 35 =====
 \Slajd{35}{ApEn: powtarzalność krótkich wzorców}
+\textbf{Temat komentarza:} ApEn krok po kroku\par\medskip
 ApEn pyta o coś innego niż histogram. Szukamy podobnych krótkich fragmentów długości m, a potem sprawdzamy, czy po dołączeniu kolejnej próbki nadal pozostają podobne. Jeśli często tracą podobieństwo, wynik jest większy. Norma maksimum oznacza, że porównujemy największą różnicę na odpowiadających sobie pozycjach.
 
 Tolerancja r decyduje, jak duża różnica nadal jest akceptowana. Dlatego dwa wyniki porównujemy przy tym samym N, m i r. W tej metodzie fragment dopasowuje się również do samego siebie. To zapobiega zerowej liczbie dopasowań, ale powoduje obciążenie estymaty, szczególnie w krótkich oknach. ApEn nie jest bezpośrednim dowodem losowości ani uszkodzenia.
 
+\clearpage
+
 % ===== Slajd 36 =====
 \Slajd{36}{ApEn: powtarzalność zmian ciśnienia}
+\textbf{Temat komentarza:} ApEn: stała tolerancja\par\medskip
 W tej demonstracji m wynosi dwa, a tolerancję wyznaczono raz ze sprawnego cyklu referencyjnego. Nie przeliczamy jej osobno dla każdego okna. To ważne, ponieważ normalizacja każdego fragmentu zmieniłaby znaczenie podobieństwa i usunęła część informacji o amplitudzie. Zwróćmy uwagę, że drobne oscylacje mogą mieścić się w tolerancji i nie zwiększać mocno ApEn.
 
 Z kolei zmiana powtarzalności może podnieść wynik. Odczytajmy kolejno pomiar, statystykę i przekroczenie. Nadal oglądamy krótkie, sześćdziesięciopróbkowe okna i wskaźnik obciążony estymacją. Dolny przebieg jest chwilowym symptomem, a nie zapamiętaną decyzją o zdarzeniu.
@@ -278,12 +351,16 @@ Z kolei zmiana powtarzalności może podnieść wynik. Odczytajmy kolejno pomiar
 
 % ===== Slajd 37 =====
 \Slajd{37}{Fraktalność: złożoność wykresu w różnych skalach}
+\textbf{Temat komentarza:} Wymiar a skończona skala\par\medskip
 Idea wymiaru pudełkowego polega na przykrywaniu wykresu siatką i liczeniu zajętych pól. Gdy zmniejszamy rozmiar pól, ich liczba rośnie. Tempo tego wzrostu opisuje nachylenie zależności w skali logarytmicznej. W definicji występuje granica przy coraz mniejszej skali, ale w pomiarze mamy tylko skończoną liczbę próbek i kilka dostępnych skal.
 
 Otrzymujemy więc estymatę zależną od sposobu przygotowania danych. Nie należy z samej wartości wnioskować o chaosie ani uszkodzeniu. Wspomniana metoda Higuchiego jest inną drogą estymacji wymiaru. Na następnym slajdzie oglądamy konkretnie zliczanie pól, a nie implementację Higuchiego.
 
+\clearpage
+
 % ===== Slajd 38 =====
 \Slajd{38}{Fraktalność: złożoność przebiegu ciśnienia}
+\textbf{Temat komentarza:} Zliczanie pól na ciśnieniu\par\medskip
 Tutaj wynik ma sens tylko razem z konwencją skalowania. Czas każdego okna sprowadzamy do zakresu od zera do jedności, a amplitudę odnosimy do sześciu odchyleń standardowych referencji. Następnie wykorzystujemy cztery wskazane rozmiary siatki.
 
 To nie jest obserwacja nieskończonej liczby skal, lecz skończony wskaźnik geometryczny. Zmiana fazy cyklu może zmienić kształt przebiegu i wartość estymaty nawet bez awarii. Zastanówmy się też, dlaczego trzeba podać jednostki i skalowanie amplitudy: przy stałej siatce rozciągnięcie jednej osi wpływa na liczbę zajętych pól. Dlatego porównujemy wyniki tylko przy zgodnej procedurze i nie traktujemy ich jako dowodu ścisłej fraktalności procesu.
@@ -292,12 +369,16 @@ To nie jest obserwacja nieskończonej liczby skal, lecz skończony wskaźnik geo
 
 % ===== Slajd 39 =====
 \Slajd{39}{Wykładnik Hursta: zależność od skali czasu}
+\textbf{Temat komentarza:} Estymacja Hursta z wielu skal\par\medskip
 W analizie R/S najpierw odejmujemy średnią fragmentu, a następnie sumujemy odchylenia. Rozstęp tych sum dzielimy przez odchylenie standardowe. Powtarzamy obliczenia dla różnych długości fragmentów i dopasowujemy zależność w skali logarytmicznej. Wykładnik Hursta jest nachyleniem tej regresji.
 
 Nie wyznaczamy go z jednego prostego ilorazu logarytmów. Interpretacja wartości powyżej lub poniżej jednej drugiej wymaga odpowiedniego modelu i zakresu skal. Trend może wyglądać jak trwałość zależności, choć wynika z normalnej zmiany zadania. Dlatego przed wnioskiem o pamięci procesu musimy sprawdzić stacjonarność, długość danych i sposób usuwania trendu.
 
+\clearpage
+
 % ===== Slajd 40 =====
 \Slajd{40}{Hurst: R/S dla fragmentów ciśnienia}
+\textbf{Temat komentarza:} Hurst w krótkim oknie\par\medskip
 W tym przykładzie pracujemy na bardzo krótkich podoknach: od sześciu do dwudziestu próbek. Fragmenty z zerowym odchyleniem pomijamy, ponieważ nie da się w nich sensownie podzielić przez S. Do dopasowania potrzeba co najmniej trzech poprawnych skal. Taki wynik traktujemy jako lokalną cechę porównawczą, a nie dowód długiej pamięci procesu.
 
 Jeśli poprawnych skal jest zbyt mało, wskaźnik powinien być niedostępny. To nie jest to samo co wskaźnik równy zero. Sprawdźmy na wykresie, czy zmiany estymaty odpowiadają fazom ciśnienia. Dopiero na tym tle możemy pytać, czy fragment F2 wyróżnia się diagnostycznie.
@@ -306,12 +387,16 @@ Jeśli poprawnych skal jest zbyt mało, wskaźnik powinien być niedostępny. To
 
 % ===== Slajd 41 =====
 \Slajd{41}{CUSUM: kumulowanie niewielkich odchyleń}
+\textbf{Temat komentarza:} CUSUM: sumowanie odchyłek\par\medskip
 CUSUM wykorzystuje to, że wiele małych odchyłek w jednym kierunku może razem dostarczyć silniejszą informację niż jedna próbka. Odejmujemy średnią odniesienia i tolerancję, a wynik dodajemy do poprzedniej sumy. Maksimum z zerem zapobiega nieograniczonemu narastaniu ujemnej wartości. W przykładzie ze slajdu każda próbka dodaje 0,3.
 
 Po pewnym czasie suma przekroczy próg. Ten wariant jest jednostronny i wykrywa wzrost średniej. Do spadku potrzebujemy drugiej sumy. Zmiana wariancji wymaga odpowiednio zaprojektowanej statystyki, a nie automatycznie tego samego wzoru. Za chwilę zobaczymy, dlaczego stała średnia całego cyklu może być słabym odniesieniem.
 
+\clearpage
+
 % ===== Slajd 42 =====
 \Slajd{42}{CUSUM: ciśnienie względem średniej odniesienia}
+\textbf{Temat komentarza:} CUSUM a prawidłowa zmiana zadania\par\medskip
 Spójrzmy na wysoki, ale prawidłowy poziom ciśnienia. Jeśli porównujemy go ze średnią całego cyklu, będzie systematycznie dodatnim odchyleniem. CUSUM może więc rosnąć bez uszkodzenia. To nie jest błąd rachunkowy: test poprawnie kumuluje różnice względem niewłaściwego dla tej fazy odniesienia.
 
 Podniesienie progu może ograniczyć alarmy, ale jednocześnie zmniejszy czułość. Nie usuwa źródła problemu. Przypomnijmy też, że tutaj każda suma jest liczona od początku okna, a nie bez przerwy przez cały eksperyment. Rozwiązaniem wartym dalszego sprawdzenia jest odniesienie zależne od fazy albo residuum po usunięciu oczekiwanej dynamiki. Nie przedstawiamy tego jeszcze jako zweryfikowanej poprawy.
@@ -320,12 +405,16 @@ Podniesienie progu może ograniczyć alarmy, ale jednocześnie zmniejszy czuło�
 
 % ===== Slajd 43 =====
 \Slajd{43}{GLR: który model lepiej wyjaśnia obserwacje?}
+\textbf{Temat komentarza:} GLR jako porównanie wyjaśnień\par\medskip
 GLR porównuje dwa wyjaśnienia tych samych obserwacji. Pierwsze mówi: nadal działa model stanu zdatnego. Drugie mówi: od pewnej chwili zmieniły się parametry. Szukamy takiego początku i takich dopuszczalnych parametrów, które najlepiej wyjaśniają dane po zmianie.
 
 Duży logarytm ilorazu wiarygodności oznacza przewagę alternatywy w przyjętej rodzinie modeli. Nie oznacza automatycznie rozpoznania przyczyny fizycznej. W modelu normalnym możemy dopasowywać średnią i wariancję. Potrzebujemy jednak minimalnej długości odcinka i ograniczenia wariancji, aby uniknąć dopasowania zdegenerowanego. Większa elastyczność modelu ułatwia dopasowanie, ale zwiększa też ryzyko reagowania na szum i normalne przejścia.
 
+\clearpage
+
 % ===== Slajd 44 =====
 \Slajd{44}{GLR: zmiana lokalnego rozkładu ciśnienia}
+\textbf{Temat komentarza:} GLR i globalne odniesienie\par\medskip
 Tutaj model odniesienia ma jedną średnią i jedno odchylenie dla całego cyklu. Gdy ciśnienie prawidłowo przechodzi na inny poziom, model z innymi parametrami może lepiej opisać okno. GLR wzrośnie, choć stan techniczny się nie zmienił. Widzimy więc różnicę między wykrywaniem zmiany statystycznej a wykrywaniem uszkodzenia.
 
 Test może poprawnie wskazać pierwszą i jednocześnie dać fałszywy alarm w drugim znaczeniu. Przeczytajmy wykres razem z fazami ciśnienia, a nie tylko z pomarańczowym obszarem F2. Aby przypisać zmianę cyberatakowi, potrzebowalibyśmy dodatkowych informacji o układzie i alternatywnych przyczynach. Sama przewaga innego rozkładu nie wystarcza.
@@ -334,12 +423,16 @@ Test może poprawnie wskazać pierwszą i jednocześnie dać fałszywy alarm w d
 
 % ===== Slajd 45 =====
 \Slajd{45}{Page-Hinkley: narastający dryf średniej}
+\textbf{Temat komentarza:} Page-Hinkley: suma względem minimum\par\medskip
 W Page-Hinkley najpierw obliczamy bieżącą średnią. Następnie sumujemy odchylenia z uwzględnieniem tolerancji i sprawdzamy, o ile suma wzrosła względem wcześniejszego minimum. To właśnie odległość od minimum jest statystyką porównywaną z progiem. Tolerancja delta i próg lambda pełnią różne role: pierwsza wpływa na każdy przyrost, drugi na moment decyzji.
 
 Podany wariant wykrywa wzrost średniej; spadek wymaga analogicznej konstrukcji z odwróconym znakiem. Sposób wyznaczania średniej i resetu jest częścią definicji algorytmu. Jeśli zmienimy te reguły, zmienimy również reakcję testu. Nie traktujmy go jako uniwersalnego wskaźnika dowolnej nieregularności.
 
+\clearpage
+
 % ===== Slajd 46 =====
 \Slajd{46}{Page-Hinkley: zmiany poziomu ciśnienia}
+\textbf{Temat komentarza:} Page-Hinkley na cyklu ciśnienia\par\medskip
 W tym przebiegu trzeba pamiętać o dwóch rzeczach: statystyka jest lokalna, a suma resetuje się w każdym oknie. Prawidłowy wzrost poziomu ciśnienia może zwiększyć test. Z kolei oscylacje wokół podobnej średniej nie muszą dawać trwałej reakcji, ponieważ dodatnie i ujemne odchylenia mogą się częściowo równoważyć.
 
 Dlatego metoda zaprojektowana do zmiany średniej nie musi być najlepsza dla każdego zaburzenia oscylacyjnego. Sprawdźmy, w których fazach pojawiają się przekroczenia i czy występują także przed F2. Nie oceniajmy samej nazwy metody. Oceniamy konkretną konfigurację: sygnał, odniesienie, tolerancję, długość okna i próg.
@@ -348,12 +441,16 @@ Dlatego metoda zaprojektowana do zmiany średniej nie musi być najlepsza dla ka
 
 % ===== Slajd 47 =====
 \Slajd{47}{Test Lepage’a: położenie i skala rozkładu}
+\textbf{Temat komentarza:} Lepage: położenie i skala\par\medskip
 Test Lepage'a łączy informację o położeniu i skali rozkładu. Próbki porządkujemy wspólnie, a następnie tworzymy dwie standaryzowane statystyki rangowe. Suma ich kwadratów daje wspólny wskaźnik. Dzięki rangom nie musimy zakładać dokładnie rozkładu normalnego, ale nadal pozostają inne warunki.
 
 Nieparametryczny nie oznacza odporny na dowolną zależność w czasie. Przybliżenie rozkładem chi-kwadrat dotyczy odpowiednich niezależnych prób z rozkładu ciągłego. W naszych danych są autokorelacja i remisy. Dlatego sposób obsługi rang oraz kalibracja progu mają znaczenie. Test może wykryć zmianę rozkładu, lecz sam nie rozstrzyga, czy jej przyczyną jest uszkodzenie.
 
+\clearpage
+
 % ===== Slajd 48 =====
 \Slajd{48}{Lepage: ciśnienie bieżące i referencyjne}
+\textbf{Temat komentarza:} Porównujemy rozkłady o różnym składzie faz\par\medskip
 Porównujemy sześćdziesiąt próbek bieżącego okna z trzystu czterdziestoma ośmioma próbkami cyklu referencyjnego. Te zbiory mogą mieć inny udział plateau i przejść. Nawet przy takim samym stanie technicznym ich rozkłady mogą więc się różnić. To bardzo ważny przykład: test nie musi mylić się statystycznie, aby alarm był błędny diagnostycznie.
 
 Wykrywa różnicę, której nie chcieliśmy interpretować jako awarii. Naturalną propozycją jest porównywanie zgodnych faz procesu. Ale taka propozycja wymaga nowej kalibracji i osobnego testu. Nie możemy powiedzieć, że poprawia wyniki, dopóki tego nie sprawdzimy. Tutaj oglądamy ograniczenie globalnego odniesienia.
@@ -362,12 +459,16 @@ Wykrywa różnicę, której nie chcieliśmy interpretować jako awarii. Naturaln
 
 % ===== Slajd 49 =====
 \Slajd{49}{Test serii: czy kolejność próbek jest losowa?}
+\textbf{Temat komentarza:} Test serii i kolejność znaków\par\medskip
 Policzmy serie na prostym przykładzie: trzy plusy, trzy minusy i dwa plusy dają trzy serie. Teraz porównujemy liczbę takich serii z wartością oczekiwaną przy losowej kolejności znaków. Duża wartość bezwzględna standaryzowanego wyniku wskazuje nietypowy układ. To nie jest jednak bezpośredni test uszkodzenia ani energii sygnału.
 
 Regulator może prawidłowo wytwarzać skorelowany lub okresowy przebieg, który nie spełnia hipotezy losowości. Trzeba też ustalić, co robimy z próbkami równymi medianie; tutaj są pomijane. Przy małych liczebnościach i silnej zależności czasowej nominalne przybliżenie rozkładu wymaga ostrożności. Dlatego interpretujemy test w kontekście procesu.
 
+\clearpage
+
 % ===== Slajd 50 =====
 \Slajd{50}{Test serii: kolejność próbek ciśnienia}
+\textbf{Temat komentarza:} Test serii: przypadki szczególne\par\medskip
 Znaki tworzymy względem mediany bieżącego okna. To znaczy, że odniesienie zmienia się razem z oknem. Próbki równe medianie są odrzucane. Jeżeli po takim zabiegu nie ma obu rodzajów znaków, kod przyjmuje zero jako brak przesłanki alarmu.
 
 To umowna reguła obsługi przypadku brzegowego, a nie wynik prawidłowo obliczonego klasycznego testu. Dlatego zero nie dowodzi losowości ani zdatności. Sprawdźmy teraz, jak przebieg statystyki wiąże się z plateau i przejściami. Jeśli test słabo rozróżnia stan zdatny i F2, nie naprawimy tego samą interpretacją wyniku — trzeba rozważyć, czy badana własność w ogóle pasuje do symptomu.
@@ -376,12 +477,16 @@ To umowna reguła obsługi przypadku brzegowego, a nie wynik prawidłowo obliczo
 
 % ===== Slajd 51 =====
 \Slajd{51}{Test Bartletta: porównanie wariancji}
+\textbf{Temat komentarza:} Bartlett: porównanie wariancji\par\medskip
 Bartlett porównuje wariancje w kilku grupach. W naszym zastosowaniu interesuje nas odniesienie i okno bieżące. Wariancja połączona zbiera informację o rozrzucie, a poprawka uwzględnia liczebności grup. Hipoteza dotyczy równości wariancji, nie średnich. Samo przesunięcie poziomu nie musi więc zwiększyć wyniku.
 
 Nominalny test zakłada normalność i niezależność i jest wrażliwy na naruszenie tych założeń. Jeszcze jedno rozróżnienie: wariancja nie jest ogólnie tym samym co energia sygnału. Dla niezerowej średniej średnia kwadratów zawiera także kwadrat średniej. Jeśli mówimy o energii fluktuacji po wycentrowaniu, wtedy wariancja ma właściwą interpretację. Warto te pojęcia oddzielać.
 
+\clearpage
+
 % ===== Slajd 52 =====
 \Slajd{52}{Bartlett: porównanie rozrzutu ciśnienia}
+\textbf{Temat komentarza:} Bartlett a faza procesu\par\medskip
 Na plateau ciśnienie może mieć bardzo mały rozrzut. Okno zawierające przejście między poziomami ma rozrzut dużo większy. Oba przypadki mogą być prawidłowe. Gdy porównujemy je z całym cyklem referencyjnym, test reaguje także na inny skład faz.
 
 Spójrzmy, gdzie pojawiają się przekroczenia przed F2, a gdzie po jego początku. Oddzielmy silną reakcję wskaźnika od dobrej jakości diagnostycznej. Detektor, który bardzo wyraźnie wykrywa każdą normalną zmianę zadania, nie rozwiązuje jeszcze naszego problemu. Próg pochodzi z osobnego cyklu, ale to samo w sobie nie gwarantuje reprezentatywności wszystkich warunków. Potrzebujemy odniesienia odpowiadającego temu, co porównujemy.
@@ -390,12 +495,16 @@ Spójrzmy, gdzie pojawiają się przekroczenia przed F2, a gdzie po jego począt
 
 % ===== Slajd 53 =====
 \Slajd{53}{F2: co wynika z porównania metod?}
+\textbf{Temat komentarza:} Wniosek z porównania metod\par\medskip
 Po tym porównaniu najważniejszy wniosek brzmi: wybór sygnału i odniesienia może być ważniejszy niż nazwa statystyki. Wszystkie metody otrzymały ten sam przebieg, lecz każda mierzy inną własność. Normalne zmiany zadania powodują niestacjonarność i mogą generować alarmy. Z kolei etykieta F2 nie oznacza, że symptom musi być jednakowo widoczny przez cały cykl.
 
 Rozsądnym dalszym krokiem jest porównanie zgodnych faz albo analiza sygnału po usunięciu oczekiwanej dynamiki. To jednak propozycja kolejnego eksperymentu. Dwa cykle demonstracyjne nie są pełną walidacją. Nie powinniśmy na ich podstawie ogłaszać uniwersalnego zwycięzcy spośród pokazanych metod.
 
+\clearpage
+
 % ===== Slajd 54 =====
 \Slajd{54}{Od wskaźnika do decyzji o uszkodzeniu}
+\textbf{Temat komentarza:} Projekt całego detektora\par\medskip
 W tym miejscu składamy detektor z elementów. Najpierw wybieramy sygnał i okno. Potem określamy normalny zakres wskaźnika w różnych warunkach pracy. Następnie dobieramy próg oraz regułę potwierdzenia i zamrażamy parametry przed testem.
 
 Dopiero kompletną decyzję porównujemy ze stanem obiektu. Warto tu zatrzymać się przy często powtarzanym błędzie: poziom istotności 5\% w pojedynczym teście nie oznacza 5\% fałszywych alarmów całego systemu. Test powtarzamy wielokrotnie, okna się pokrywają, a decyzja może mieć pamięć. Ocenie podlega cały algorytm, łącznie z resetem i obsługą braków danych. W następnej części właśnie taki algorytm sprawdzimy.
@@ -404,12 +513,16 @@ Dopiero kompletną decyzję porównujemy ze stanem obiektu. Warto tu zatrzymać 
 
 % ===== Slajd 55 =====
 \Slajd{55}{Jak ocenić detektor na stanowisku FESTO?}
+\textbf{Temat komentarza:} Co sprawdzamy na HOLDOUT?\par\medskip
 Teraz korzystamy z cykli siódmego i ósmego jako końcowego fragmentu HOLDOUT. Nie zmieniamy już tolerancji, progu ani logiki potwierdzania. Porównujemy dwie informacje: etykietę Fault i alarm detektora. Pytamy kolejno o fałszywe alarmy, czas poprawnego alarmu oraz opóźnienie.
 
 Ważne: alarm nie jest tutaj samym chwilowym przekroczeniem ApEn. Po trzech kolejnych przekroczeniach ustawiamy pamięć i utrzymujemy informację o wykryciu zdarzenia. To inna semantyka niż na wcześniejszych wykresach. Etykieta Fault służy wyłącznie do oceny. Nie wolno używać jej do resetowania alarmu w dogodnym momencie ani do ponownego strojenia parametrów.
 
+\clearpage
+
 % ===== Slajd 56 =====
 \Slajd{56}{Krok 1. Porównujemy stan z alarmem}
+\textbf{Temat komentarza:} Najpierw przebieg, potem wskaźniki\par\medskip
 Odczytajmy najpierw przebieg, zanim zobaczymy końcowe liczby. F2 rozpoczyna się w 285 sekundzie, a potwierdzony alarm pojawia się w 302 sekundzie. W ocenionym fragmencie przed F2 alarmu nie ma. Po potwierdzeniu jest utrzymywany przez pamięć.
 
 Szare obszary są wyłączone z oceny: obejmują rozruch oraz lukę z ponownym zebraniem pełnego okna. Przerwa na wykresie nie oznacza, że wewnętrzna pamięć została skasowana. Oznacza, że nie raportujemy tam ważnej decyzji podlegającej ocenie. Już teraz możemy oszacować opóźnienie na siedemnaście sekund. Za chwilę rozłożymy pozostały wynik na cztery kategorie decyzji.
@@ -418,12 +531,16 @@ Szare obszary są wyłączone z oceny: obejmują rozruch oraz lukę z ponownym z
 
 % ===== Slajd 57 =====
 \Slajd{57}{Krok 2. Zliczamy poprawne i błędne decyzje}
+\textbf{Temat komentarza:} Zliczanie ocenionego czasu\par\medskip
 Każda ważna próbka trafia do jednego pola. Mamy 226 sekund stanu zdatnego bez alarmu i zero sekund fałszywego alarmu. Po początku F2 przez siedemnaście ocenionych sekund alarmu jeszcze nie ma. Następnie alarm jest aktywny przez 203 ocenione sekundy. Razem daje to 446 ocenionych próbek.
 
 Co z pozostałymi 88 sekundami F2? Nie wpisujemy ich ani do przeoczeń, ani do poprawnych wykryć. Są poza maską oceny i muszą zostać jawnie zaraportowane. Przy nominalnym kroku jednej sekundy próbkom przypisujemy sekundę czasu. Bez takiej konwencji nie wolno dowolnie utożsamiać liczności próbek z czasem, szczególnie przy nieregularnym zapisie.
 
+\clearpage
+
 % ===== Slajd 58 =====
 \Slajd{58}{Krok 3. Czy występują fałszywe alarmy?}
+\textbf{Temat komentarza:} Fałszywe alarmy: poprawny mianownik\par\medskip
 Aby policzyć fałszywe alarmy, wybieramy tylko oceniony fragment zdatności. Mianownik wynosi więc 226 sekund, a nie cały czas eksperymentu. W tym przedziale licznik wynosi zero. Wynik to zero procent.
 
 Możemy uczciwie powiedzieć: w ocenionej części cyklu siódmego nie zaobserwowano fałszywego alarmu. Nie możemy powiedzieć: ten detektor nigdy nie alarmuje fałszywie. To był jeden ograniczony fragment o określonych warunkach. Do oceny eksploatacyjnej potrzebne są dalsze zdatne cykle, inne obciążenia i prawidłowe przejścia. Indeks obs przypomina właśnie o tym zakresie: oceniamy dostępne pełne okna, a nie hipotetycznie kompletny zapis.
@@ -432,12 +549,16 @@ Możemy uczciwie powiedzieć: w ocenionej części cyklu siódmego nie zaobserwo
 
 % ===== Slajd 59 =====
 \Slajd{59}{Krok 4. Jak długo detektor wskazuje F2?}
+\textbf{Temat komentarza:} Udział czasu poprawnego alarmu\par\medskip
 Teraz wybieramy wyłącznie oceniony czas F2. Mamy 203 sekundy z alarmem oraz siedemnaście bez alarmu, czyli 220 sekund w mianowniku. Otrzymujemy 92,27\%. Proszę zwrócić uwagę na sformułowanie: jest to udział ocenionego czasu z poprawnym alarmem, a nie procent wykrytych uszkodzeń czy cykli.
 
 Ocena obejmuje 71,43\% pełnego okresu F2. Pozostałych 88 sekund nie znamy w sensie przyjętej procedury oceny pełnych okien. Druga istotna rzecz to pamięć: wynik dotyczy alarmu utrzymywanego po potwierdzeniu. Nie oznacza, że ApEn pozostawała ponad progiem przez cały ten czas. Obie informacje są potrzebne do poprawnej interpretacji liczby.
 
+\clearpage
+
 % ===== Slajd 60 =====
 \Slajd{60}{Krok 5. Jak szybko wykryto F2?}
+\textbf{Temat komentarza:} Skąd bierze się 17 sekund?\par\medskip
 Rozłóżmy siedemnaście sekund na dwa etapy. Od początku F2 w 285 sekundzie do pierwszego przekroczenia progu około 300 sekundy upływa piętnaście sekund. Potem potrzebujemy trzech kolejnych przekroczeń: w 300, 301 i 302 sekundzie. To dodaje dwa odstępy, a nie trzy sekundy po pierwszej próbce.
 
 Potwierdzony alarm pojawia się więc w 302 sekundzie. W tym wariancie z pamięcią mamy jedno zbocze narastające, zatem jest ono jednocześnie pierwszym i ostatnim. Nie ma tu konfliktu z wcześniejszym przykładem definicji DAMADICS. Wynik pochodzi ze znaczników próbek; nie obejmuje osobno zmierzonego czasu transmisji i obliczeń.
@@ -446,12 +567,16 @@ Potwierdzony alarm pojawia się więc w 302 sekundzie. W tym wariancie z pamięc
 
 % ===== Slajd 61 =====
 \Slajd{61}{Te same wyniki w macierzy pomyłek}
+\textbf{Temat komentarza:} Macierz wyników bez utraty znaczenia\par\medskip
 To są dokładnie te same wyniki, tylko zapisane w macierzy. Wiersze nadal oznaczają rzeczywisty stan, a kolumny alarm z pamięcią. Przeczytajmy FN: siedemnaście ocenionych próbek F2 bez alarmu. Przeczytajmy TP: 203 próbki F2 z alarmem.
 
 Z samej macierzy nie wynika ogólnie, kiedy były błędy. Tutaj wiemy z wykresu, że siedemnaście przeoczeń poprzedza pierwszą reakcję. W innym przebiegu ta sama liczba mogłaby być rozproszona po całym zdarzeniu. Pamiętajmy też, że 220 próbek F2 nie oznacza 220 niezależnych eksperymentów wykrycia awarii. To kolejne, silnie zależne obserwacje jednego epizodu.
 
+\clearpage
+
 % ===== Slajd 62 =====
 \Slajd{62}{Jak połączyć macierz z metrykami?}
+\textbf{Temat komentarza:} Łączenie perspektywy czasowej i klasyfikacyjnej\par\medskip
 Po podstawieniu do wzorów dostajemy czułość 203 przez 220, czyli 92,27\%, oraz FPR równe zero przez 226. Te liczby pokrywają się z miarami czasowymi, ponieważ mamy stały krok i tę samą maskę oceny. To nie są dwa niezależne dowody skuteczności, tylko dwa sposoby zapisania tej samej informacji. Co trzeba do nich dodać?
 
 Przebieg decyzji, opóźnienie i pokrycie. Dwa detektory mogą mieć identyczną macierz, a jeden reagować na początku uszkodzenia, drugi dopiero pod koniec. Bez osi czasu nie odróżnimy tych sytuacji. Dlatego raport diagnostyczny nie powinien kończyć się na pojedynczej tabeli klasyfikacyjnej.
@@ -460,12 +585,16 @@ Przebieg decyzji, opóźnienie i pokrycie. Dwa detektory mogą mieć identyczną
 
 % ===== Slajd 63 =====
 \Slajd{63}{Wniosek z testu HOLDOUT}
+\textbf{Temat komentarza:} Ocena względem wymagań\par\medskip
 Zestawmy wynik z wymaganiami. W tym fragmencie nie było fałszywych alarmów, udział poprawnego alarmu wyniósł 92,27\%, a reakcja nastąpiła po siedemnastu sekundach. To konkretny, odtworzony rezultat, ale nadal dotyczy jednego epizodu i ograniczonego pokrycia. Jeśli projekt wymaga co najmniej 95\% dla tej miary, to wynik go nie spełnia.
 
 Nie wystarczy powiedzieć, że jest blisko. Wartość 95\% jest tu przykładowym wymaganiem projektowym, nie automatyczną normą benchmarku. Musimy również pamiętać o logice podtrzymania. Detektor wykrył zdarzenie i utrzymał alarm, ale nie dowiedliśmy jeszcze poprawnego rozpoznawania bieżącego stanu w każdych warunkach.
 
+\clearpage
+
 % ===== Slajd 64 =====
 \Slajd{64}{Uzupełnienie: precision i accuracy}
+\textbf{Temat komentarza:} Precision i accuracy bez złudzenia sukcesu\par\medskip
 Precision wynosi tutaj sto procent, ponieważ wszystkie ocenione próbki z alarmem przypadają na F2. Czy to znaczy, że nie ma przeoczeń? Nie — nadal mamy siedemnaście próbek niezdatnych bez alarmu. Accuracy wynosi 96,19\%, ponieważ poprawne są 226 decyzji TN i 203 decyzje TP spośród 446.
 
 Obie liczby są prawidłowe, ale odpowiadają na inne pytania niż opóźnienie i pokrycie. Szczególnie accuracy zależy od proporcji stanów w zbiorze. Gdy zmienimy długość fragmentu zdatnego, może się zmienić mimo podobnej reakcji na uszkodzenie. Dlatego nie wybieramy najbardziej atrakcyjnej miary, lecz raportujemy te, które odpowiadają wymaganiom zastosowania.
@@ -474,12 +603,16 @@ Obie liczby są prawidłowe, ale odpowiadają na inne pytania niż opóźnienie 
 
 % ===== Slajd 65 =====
 \Slajd{65}{Uzupełnienie: konfiguracja detektora}
+\textbf{Temat komentarza:} Specyfikacja umożliwiająca odtworzenie\par\medskip
 Ten slajd jest skróconą specyfikacją, dzięki której można odtworzyć detektor. Okno ma sześćdziesiąt próbek, m wynosi dwa, tolerancja pochodzi z cyklu pierwszego, a próg z cyklu piątego. Trzy kolejne przekroczenia ustawiają pamięć. Reset następuje przed całym eksperymentem, nie w chwili zmiany etykiety.
 
 Brak danych zeruje licznik potwierdzania, ale nie kasuje już ustawionej pamięci. Proszę zauważyć różnicę oznaczeń: b to chwilowy symptom, a s to zapamiętane wykrycie zdarzenia. Wcześniej s oznaczało chwilowe przekroczenie na wykresach porównawczych. Bez doprecyzowania tej semantyki można błędnie porównać wyniki dwóch różnych algorytmów.
 
+\clearpage
+
 % ===== Slajd 66 =====
 \Slajd{66}{Uzupełnienie: skąd 71,43\% pokrycia?}
+\textbf{Temat komentarza:} Pokrycie: luka i odbudowa okna\par\medskip
 Wyjaśnijmy dokładnie brakujące 88 sekund F2. Po próbce w 409 sekundzie kolejna jest dopiero w 439. Brakuje więc chwil od 410 do 438, czyli dwudziestu dziewięciu próbek. Nie interpolujemy ich i nie budujemy okna przez lukę. Po wznowieniu musimy jeszcze zebrać sześćdziesiąt kolejnych próbek; pierwsze pełne okno kończy się w 498 sekundzie.
 
 Daje to dodatkowe pięćdziesiąt dziewięć sekund poza oceną. Ocenione F2 obejmuje 125 sekund przed luką i 95 po odbudowie, razem 220 z pełnych 308. Stąd 71,43\% pokrycia. Przedziały zapisujemy jako półotwarte, aby nie policzyć granicznych chwil dwukrotnie. To jawne ograniczenie wyniku, a nie szczegół do pominięcia.
@@ -488,12 +621,16 @@ Daje to dodatkowe pięćdziesiąt dziewięć sekund poza oceną. Ocenione F2 obe
 
 % ===== Slajd 67 =====
 \Slajd{67}{Literatura (1/4)}
+\textbf{Temat komentarza:} Literatura: modele, entropia i złożoność\par\medskip
 Na tej stronie są źródła do czterech różnych wątków. Isermann porządkuje architekturę diagnostyki. Shannon jest punktem odniesienia dla entropii rozkładu. Pincus wprowadza ApEn jako miarę złożoności, a Higuchi przedstawia metodę estymacji wymiaru.
 
 Korzystając z literatury, nie wystarczy przepisać wzoru. Trzeba sprawdzić założenia, długość danych, parametry i sposób normalizacji. Przypomnę też ważne rozróżnienie: w naszej demonstracji fraktalności użyto zliczania pól. Obecność publikacji Higuchiego nie oznacza, że właśnie jego algorytm został uruchomiony. W sprawozdaniu nazwa zastosowanej implementacji powinna odpowiadać temu, co faktycznie oblicza kod.
 
+\clearpage
+
 % ===== Slajd 68 =====
 \Slajd{68}{Literatura (2/4)}
+\textbf{Temat komentarza:} Literatura: skale i detekcja zmian\par\medskip
 Tutaj mamy źródła związane ze skalowaniem i wykrywaniem zmian. Hurst dotyczy zależności od skali obserwacji, Page jest klasycznym odniesieniem dla CUSUM, a Basseville i Nikiforov przedstawiają szerszą teorię detekcji nagłych zmian. Hinkley dotyczy wnioskowania o punkcie zmiany z wykorzystaniem sum skumulowanych.
 
 Przy porównaniu publikacji z implementacją warto sprawdzić trzy rzeczy: jakie jest odniesienie, jak aktualizuje się statystyka i kiedy następuje reset. Dwie procedury o podobnej nazwie mogą zachowywać się inaczej, jeśli jedna działa nieprzerwanie, a druga zaczyna od zera w każdym oknie. Tę różnicę trzeba opisać przed interpretacją wyników.
@@ -502,12 +639,16 @@ Przy porównaniu publikacji z implementacją warto sprawdzić trzy rzeczy: jakie
 
 % ===== Slajd 69 =====
 \Slajd{69}{Literatura (3/4)}
+\textbf{Temat komentarza:} Literatura: testy i zasady oceny\par\medskip
 Te źródła pomagają sprawdzić założenia testów Lepage'a, serii i Bartletta oraz definicje oceny benchmarkowej. Proszę zwrócić uwagę, że źródło statystyki i źródło wymagania projektowego to nie jest to samo. Publikacja może definiować miarę, ale nie narzucać dopuszczalnego opóźnienia dla naszej instalacji.
 
 Przy odtwarzaniu wyniku trzeba sprawdzić także horyzont, sposób oznaczania braku detekcji i regułę wyboru momentu alarmu. Nawet identyczna nazwa wskaźnika nie gwarantuje identycznego obliczenia. Jeśli modyfikujemy ocenę z powodu braków danych, powinniśmy to napisać wprost, tak jak przy indeksie obs i pokryciu w tym wykładzie.
 
+\clearpage
+
 % ===== Slajd 70 =====
 \Slajd{70}{Literatura (4/4)}
+\textbf{Temat komentarza:} Literatura: kontekst DAMADICS\par\medskip
 Ten artykuł wprowadza kontekst benchmarku DAMADICS i problem porównywania metod diagnostycznych na wspólnie określonym zadaniu. Benchmark jest wartościowy dlatego, że ustala warunki oraz zasady oceny. Samo użycie jego wskaźnika nie czyni jednak danych z innego stanowiska częścią benchmarku.
 
 W naszym przykładzie dane pochodzą z FESTO, a kryteria oceny zostały zaadaptowane i jawnie ograniczone maską dostępnych okien. Oddzieliliśmy też sztuczny przykład przebiegu alarmów od rzeczywistego eksperymentu. To dobra praktyka: wskazać, skąd pochodzi każda liczba, jaka definicja została użyta i które wnioski są wynikiem pomiaru, a które propozycją dalszej pracy.
@@ -516,6 +657,7 @@ W naszym przykładzie dane pochodzą z FESTO, a kryteria oceny zostały zaadapto
 
 % ===== Slajd 71 =====
 \Slajd{71}{Dziękuję za uwagę}
+\textbf{Temat komentarza:} Zakończenie i sprawdzenie zrozumienia\par\medskip
 Wróćmy do pytania z początku: ciśnienie wzrosło o 50 milibarów — czy to uszkodzenie? Teraz odpowiedź powinna uwzględniać zadanie, fazę cyklu, oczekiwaną dynamikę, odniesienie i logikę alarmu. Sama zmiana wartości nie wystarcza.
 
 Podobnie sama wysoka accuracy nie wystarcza do przyjęcia detektora. Potrzebujemy informacji o przeoczeniach, fałszywych alarmach, opóźnieniu i pokryciu, a potem sprawdzenia na innych warunkach pracy. Na zakończenie proponuję jedno pytanie projektowe: kiedy wolno skasować zapamiętany alarm i jak sprawdzić, że przyjęta reguła nie korzysta z niedostępnej w eksploatacji etykiety? To dobrze pokazuje, że diagnostyka jest projektowaniem całego procesu decyzyjnego.
